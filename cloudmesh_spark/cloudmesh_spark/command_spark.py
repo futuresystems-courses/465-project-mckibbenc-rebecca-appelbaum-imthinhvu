@@ -15,9 +15,9 @@ class command_spark(object):
         subprocess.call("touch %s_nodes.txt"% (name), shell=True)
         for node in nodes:
             subprocess.call("cm vm ip assign %s"% (node), shell=True)
-            #output = subprocess.check_output("cm vm ip show %s --format=json"% (node), shell=True)
-            #ip = output.split("\n")[4].split(":")[1].split("\"")[1]
-            #subprocess.call("%s >> %s_nodes.txt"% (ip, name), shell=True)
+            output = subprocess.check_output("cm vm ip show %s --format=json"% (node), shell=True)
+            ip = output.split("\n")[4].split(":")[1].split("\"")[1]
+            subprocess.call("echo \"%s\" >> %s_nodes.txt"% (ip, name), shell=True)
 
 
     @classmethod

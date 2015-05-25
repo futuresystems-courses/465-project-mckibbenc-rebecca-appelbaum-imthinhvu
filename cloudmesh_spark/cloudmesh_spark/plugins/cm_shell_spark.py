@@ -40,28 +40,37 @@ class cm_shell_spark:
         """
         pprint(arguments)
         if arguments['deploy']:
-            Console.ok("I want to deploy")
+            Console.ok("Deploying...")
             name = arguments['NAME']
             count = arguments['--count']
+            if count is None:
+                count = "3"
+                print("using default count: " + count)
             ln = arguments['--ln']
+            if ln is None:
+                ln = "ubuntu"
+                print("using default login: " + ln)
             cloud = arguments['--cloud']
+            if cloud is None:
+                cloud = "india"
+                print("using default cloud: " + cloud)
             flavor = arguments['--flavor']
-            image = arguments['--image']	
-            command_spark.deploy(name)
+            if flavor is None:
+                flavor = "m1.small"
+                print("using default flavor: " + flavor)
+            image = arguments['--image']
+            if image is None:
+                image = "futuresystems/ubuntu-14.04"
+                print("using default image: " + image)
+            command_spark.deploy(name, count, ln, cloud, flavor, image)
         elif arguments['destroy']:
-            Console.ok("I want to destroy")
+            Console.ok("Destroying...")
             name = arguments['NAME']
             command_spark.destroy(name)
         elif arguments["NAME"] is None:
             Console.error("Please specify a name for the cluster")
         else:
-            name = arguments["NAME"]
-            Console.info("trying to reach {0}".format(name))
-            status = command_spark.status(name)
-            if status:
-                Console.info("machine " + name + " has been found. ok.")
-            else:
-                Console.error("machine " + name + " not reachable. error.")
+            Console.error("Invalid spark command")
         pass
 
 if __name__ == '__main__':
