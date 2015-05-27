@@ -29,3 +29,18 @@ class command_spark(object):
     @classmethod
     def destroy(cls, name):
         subprocess.call("cm cluster remove %s"% (name), shell=True)
+
+    
+    @classmethod
+    def start(cls, master):
+        output = subprocess.check_output("cm vm ip show %s --format=json"% (master), shell=True)
+        ip = output.split("\n")[4].split(":")[1].split("\"")[1]
+        subprocess.call("ssh ubuntu@%s \'bash /home/ubuntu/spark-1.3.1-bin-hadoop2.6/sbin/start-all.sh\'"% (ip), shell=True)
+
+
+    @classmethod
+    def stop(cls, master):
+        output = subprocess.check_output("cm vm ip show %s --format=json"% (master), shell=True)
+        ip = output.split("\n")[4].split(":")[1].split("\"")[1]
+        subprocess.call("ssh ubuntu@%s \'bash /home/ubuntu/spark-1.3.1-bin-hadoop2.6/sbin/stop-all.sh\'"% (ip), shell=True)
+

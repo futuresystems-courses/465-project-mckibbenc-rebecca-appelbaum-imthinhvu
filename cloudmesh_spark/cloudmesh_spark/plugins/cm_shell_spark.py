@@ -24,10 +24,13 @@ class cm_shell_spark:
                                 [--flavor=S]
                                 [--image=S]
               spark destroy NAME
+              spark start MASTER
+              spark stop MASTER
 
           Arguments:
 
             NAME      Name of the spark cluster group
+            MASTER    Name of the spark master node
 
           Options:
 
@@ -67,6 +70,14 @@ class cm_shell_spark:
             Console.ok("Destroying...")
             name = arguments['NAME']
             command_spark.destroy(name)
+        elif arguments['start']:
+            master = arguments['MASTER']
+            Console.ok("Starting spark cluster from master node %s"% (master))
+            command_spark.start(master)
+        elif arguments['stop']:
+            master = arguments['MASTER']
+            Console.ok("Stopping spark cluster from master node %s"% (master))
+            command_spark.stop(master)
         elif arguments["NAME"] is None:
             Console.error("Please specify a name for the cluster")
         else:
