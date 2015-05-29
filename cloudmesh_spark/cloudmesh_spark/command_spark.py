@@ -60,9 +60,11 @@ class command_spark(object):
         name = name_pieces[0] + "_" + name_pieces[1]
         subprocess.call("rm $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (name), shell=True)
         subprocess.call("echo \"export SPARK_MASTER_IP=%s\nexport SPARK_MASTER_PORT=7077\nexport SPARK_WORKER_INSTANCES=2\" >> $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (master_ip, name), shell=True)
-        ip_list = subprocess.check_output("cat $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True)
-        ip_list = ip_list[1:-1]
+        temp = subprocess.check_output("cat $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True)
+        ip_list = temp.split("\n")[1:-1]
+        print(ip_list)
         for ip in ip_list:
+            print("\n\n\n" + ip + "\n\n\n\n")
             subprocess.call("scp $CM_SPARK_DIR/spark-env/%s_spark-env.txt ubuntu@%s:~/spark-env.txt"% (name, ip), shell=True) 
 
         subprocess.call("ansible-playbook -i $CM_SPARK_DIR/inventory/%s_inventory.txt -c ssh $CM_SPARK_DIR/ansible/spark-env.yaml"% (name), shell=True)
