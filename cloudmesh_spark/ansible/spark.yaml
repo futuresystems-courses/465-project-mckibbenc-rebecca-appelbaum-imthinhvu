@@ -25,5 +25,3 @@
     shell: echo "127.0.0.1 localhost $(hostname)" >> /etc/hosts
   - name: Add hosts file to each node
     shell: cat /home/ubuntu/hosts.txt >> /etc/hosts
-  - name: Copy slaves.template to slaves
-    shell: cp /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves.template /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves
