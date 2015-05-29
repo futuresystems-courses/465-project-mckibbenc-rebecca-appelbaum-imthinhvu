@@ -1,2 +1,2 @@
-10.23.2.238 sparkle_test_120
-10.23.2.239 sparkle_test_121
+10.23.2.248 sparkle-test-124
+10.23.2.249 sparkle-test-125

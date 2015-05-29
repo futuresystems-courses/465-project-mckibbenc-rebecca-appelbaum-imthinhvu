@@ -36,7 +36,7 @@ class command_spark(object):
             for ip_address in ip_list:
                 #subprocess.call("ssh ubuntu@%s \'exit\'"% (ip_address), shell=True)
                 subprocess.call("scp $CM_SPARK_DIR/hosts/%s_hosts.txt ubuntu@%s:~/hosts.txt"% (name, ip_address), shell=True) 
-                subprocess.call("scp $CM_SPARK_DIR/spark-env/%s_hosts.txt ubuntu@%s:~/hosts.txt"% (name, ip_address), shell=True) 
+                subprocess.call("scp $CM_SPARK_DIR/spark-env/%s_spark-env.txt ubuntu@%s:~/spark-env.txt"% (name, ip_address), shell=True) 
 
         subprocess.call("ansible-playbook -i $CM_SPARK_DIR/inventory/%s_inventory.txt -c ssh $CM_SPARK_DIR/ansible/spark.yaml"% (name), shell=True)
 
