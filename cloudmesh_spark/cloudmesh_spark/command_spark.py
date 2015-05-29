@@ -58,6 +58,7 @@ class command_spark(object):
     def start(cls, master):
         output = subprocess.check_output("cm vm ip show %s --format=json"% (master), shell=True)
         ip = output.split("\n")[4].split(":")[1].split("\"")[1]
+        subprocess.call("rm $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (name), shell=True)
         subprocess.call("echo \"export SPARK_MASTER_IP=%s\nexport SPARK_MASTER_PORT=7077\nexport SPARK_WORKER_INSTANCES=2\" >> $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (ip, name), shell=True)
         subprocess.call("ansible-playbook -i $CM_SPARK_DIR/inventory/%s_inventory.txt -c ssh $CM_SPARK_DIR/ansible/spark-env.yaml"% (name), shell=True)
         subprocess.call("ssh ubuntu@%s \'bash /home/ubuntu/spark-1.3.1-bin-hadoop2.6/sbin/start-all.sh\'"% (ip), shell=True)
