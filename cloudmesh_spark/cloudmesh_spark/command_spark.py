@@ -17,6 +17,7 @@ class command_spark(object):
         subprocess.call("rm $CM_SPARK_DIR/hosts/%s_hosts.txt"% (name), shell=True)
         subprocess.call("rm $CM_SPARK_DIR/node_keys/%s"% (name), shell=True)
         subprocess.call("rm $CM_SPARK_DIR/node_keys/%s.pub"% (name), shell=True)
+        subprocess.call("rm $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (name), shell=True)
         subprocess.call("echo \"[spark-cluster]\" > $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True)
         subprocess.call("ssh-keygen -t rsa -f $CM_SPARK_DIR/node_keys/%s -P \"\""% (name), shell=True)
         slaves = "\n"
@@ -29,16 +30,20 @@ class command_spark(object):
             slaves += ip + "\n"
             ip_list.append(ip)
             subprocess.call("echo \"%s\" >> $CM_SPARK_DIR/inventory/%s_inventory.txt"% (ip, name), shell=True)
-            subprocess.call("echo \"%s %s\" >> $CM_SPARK_DIR/hosts/%s_hosts.txt"% (ip, node, name), shell=True)
+            hostname = node.replace("_", "-")
+            subprocess.call("echo \"%s %s\" >> $CM_SPARK_DIR/hosts/%s_hosts.txt"% (ip, hostname, name), shell=True)
+            subprocess.call("echo \"export SPARK_MASTER_IP=%s\nexport SPARK_MASTER_PORT=7077\nexport SPARK_WORKER_INSTANCES=2\" >> $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (ip, name), shell=True)
             for ip_address in ip_list:
                 #subprocess.call("ssh ubuntu@%s \'exit\'"% (ip_address), shell=True)
                 subprocess.call("scp $CM_SPARK_DIR/hosts/%s_hosts.txt ubuntu@%s:~/hosts.txt"% (name, ip_address), shell=True) 
+                subprocess.call("scp $CM_SPARK_DIR/spark-env/%s_hosts.txt ubuntu@%s:~/hosts.txt"% (name, ip_address), shell=True) 
 
         subprocess.call("ansible-playbook -i $CM_SPARK_DIR/inventory/%s_inventory.txt -c ssh $CM_SPARK_DIR/ansible/spark.yaml"% (name), shell=True)
 
         for ip_address in ip_list:
-            subprocess.call("ssh ubuntu@%s \'cp /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves.template /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves"% (ip), shell=True)
-            subprocess.call("ssh ubuntu@%s \'echo \"%s\" >> /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves.template\'"% (ip_address, slaves), shell=True)
+            #subprocess.call("ssh ubuntu@%s \'cp /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves.template /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves"% (ip_address), shell=True)
+            #subprocess.call("ssh ubuntu@%s \'cp /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/spark-env.sh.template /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/spark-env.sh"% (ip_address), shell=True)
+            subprocess.call("ssh ubuntu@%s \'echo \"%s\" >> /home/ubuntu/spark-1.3.1-bin-hadoop2.6/conf/slaves\'"% (ip_address, slaves), shell=True)
             subprocess.call("scp $CM_SPARK_DIR/node_keys/%s ubuntu@%s:~/.ssh/id_rsa"% (name, ip_address), shell=True)
             subprocess.call("scp $CM_SPARK_DIR/node_keys/%s.pub ubuntu@%s:~/.ssh/id_rsa.pub"% (name, ip_address), shell=True)
             subprocess.call("ssh-copy-id -i $CM_SPARK_DIR/node_keys/%s ubuntu@%s"% (name, ip_address), shell=True)
