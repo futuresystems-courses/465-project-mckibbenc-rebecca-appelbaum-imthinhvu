@@ -24,4 +24,4 @@
   - name: Edit hosts file
     shell: echo "127.0.0.1 localhost $(hostname)" >> /etc/hosts
   - name: Add hosts file to each node
-    shell: cat ~/hosts.txt >> /etc/hosts
+    shell: cat /home/ubuntu/hosts.txt >> /etc/hosts
