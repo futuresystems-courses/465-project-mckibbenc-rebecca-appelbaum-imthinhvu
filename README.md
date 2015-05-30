@@ -1,1 +1,3 @@
-# 465-project-mckibbenc-rebecca-appelbaum-imthinhvu
+# Automated Deployment of OpenStreetMap Data in an Apache Spark Cluster
+
+OpenStreetMap is a community project that serves as a central repository for user submitted map data from around the globe.  With a dataset size of several terabytes, parsing OSM data can be a computationally expensive task.  The goal of this project is to automate the task of creating clusters of VMs on OpenStack and installing Apache Spark on the clusters, as well as providing mechanisms for easily importing OpenStreetMap data into the cluster for analytical processing. All of this will be accomplished utilizing DevOps principles, with a reliance on Chef scripts for automation and Jenkins for continuous integration.
