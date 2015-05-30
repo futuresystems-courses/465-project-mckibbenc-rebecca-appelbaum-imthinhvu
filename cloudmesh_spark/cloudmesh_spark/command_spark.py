@@ -13,8 +13,8 @@ class command_spark(object):
         for i in range (start_index, start_index + int(count)):
             nodes.append(name + "_" + str(i)) 
         subprocess.call("cm cluster create %s --count=%s --ln=%s --cloud=%s --flavor=%s --image=%s"% (name, count, login, cloud, flavor, image), shell=True)
-        subprocess.call("rm $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True)
-        subprocess.call("rm $CM_SPARK_DIR/hosts/%s_hosts.txt"% (name), shell=True)
+        subprocess.call("rm $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True) 
+        subprocess.call("rm $CM_SPARK_DIR/hosts/%s_hosts.txt"% (name), shell=True) 
         subprocess.call("rm $CM_SPARK_DIR/node_keys/%s"% (name), shell=True)
         subprocess.call("rm $CM_SPARK_DIR/node_keys/%s.pub"% (name), shell=True)
         subprocess.call("rm $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (name), shell=True)
@@ -57,7 +57,10 @@ class command_spark(object):
         output = subprocess.check_output("cm vm ip show %s --format=json"% (master), shell=True)
         master_ip = output.split("\n")[4].split(":")[1].split("\"")[1]
         name_pieces = master.split("_")
-        name = name_pieces[0] + "_" + name_pieces[1]
+        name = ""
+        for i in range (0, len(name_pieces) - 1):
+            name += name_pieces[i] + "_"
+        name = name[0:-1]
         subprocess.call("rm $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (name), shell=True)
         subprocess.call("echo \"export SPARK_MASTER_IP=%s\nexport SPARK_MASTER_PORT=7077\nexport SPARK_WORKER_INSTANCES=2\" >> $CM_SPARK_DIR/spark-env/%s_spark-env.txt"% (master_ip, name), shell=True)
         temp = subprocess.check_output("cat $CM_SPARK_DIR/inventory/%s_inventory.txt"% (name), shell=True)
