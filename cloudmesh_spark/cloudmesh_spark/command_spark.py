@@ -32,7 +32,8 @@ class command_spark(object):
             subprocess.call("echo \"%s\" >> $CM_SPARK_DIR/inventory/%s_inventory.txt"% (ip, name), shell=True)
             hostname = node.replace("_", "-")
             subprocess.call("echo \"%s %s\" >> $CM_SPARK_DIR/hosts/%s_hosts.txt"% (ip, hostname, name), shell=True)
-            for ip_address in ip_list:
+        
+        for ip_address in ip_list:
                 #subprocess.call("ssh ubuntu@%s \'exit\'"% (ip_address), shell=True)
                 subprocess.call("scp $CM_SPARK_DIR/hosts/%s_hosts.txt ubuntu@%s:~/hosts.txt"% (name, ip_address), shell=True) 
     
