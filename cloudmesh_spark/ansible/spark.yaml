@@ -25,3 +25,7 @@
     shell: echo "127.0.0.1 localhost $(hostname)" >> /etc/hosts
   - name: Add hosts file to each node
     shell: cat /home/ubuntu/hosts.txt >> /etc/hosts
+  - name: Copy OSM python script to remote VMs
+    copy: src=/home/ubuntu/465-project-mckibbenc-rebecca-appelbaum-imthinhvu/Osm.py dest=/home/ubuntu/spark-1.3.1-bin-hadoop2.6/Osm.py
+  - name: Copy OSM data to remote VMs
+    copy: src=/home/ubuntu/465-project-mckibbenc-rebecca-appelbaum-imthinhvu/muenchen.osm dest=/home/ubuntu/spark-1.3.1-bin-hadoop2.6/muenchen.osm
