@@ -55,7 +55,7 @@ cm spark deploy example
 ```
 cm spark start example_1
 ```
-10.If you would like to test any of the clusters you can login using your public ip address. It would look something like "ssh ubuntu@149.158.213.56". If you go cd into spark-1.3.1-bin-hadoop2.6 you can run scripts on the clusters. Use the below code to see how many nodes and railways there are in Munich Germany according to OpenStreetMaps.
+10. If you would like to test any of the clusters you can login using your public ip address. It would look something like "ssh ubuntu@149.158.213.56". If you go cd into spark-1.3.1-bin-hadoop2.6 you can run scripts on the clusters. Use the below code to see how many nodes and railways there are in Munich Germany according to OpenStreetMaps.
 ```
 ~/spark-1.3.1-bin-hadoop2.6/bin/spark-submit \
 --master local[4] \
