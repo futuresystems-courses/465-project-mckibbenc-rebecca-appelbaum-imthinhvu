@@ -49,7 +49,7 @@ ssh-add
 8. Deploy clusters and have spark installed on each cluster. The command will automatically deploy 3 clusters. However this can be customized by adding –count=N where N is the number of clusters you want deployed.
 Additional documentation can be found if you write cm spark --help.
 ```
-cm deploy spark example
+cm spark deploy example
 ```
 9. You can also select the node that you want as the master by running a start command with the cluster that you want to be the master.
 ```
