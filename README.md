@@ -71,4 +71,5 @@ If your nodes are not running, there may be an issue with how the /etc/hosts fil
 sudo vi /etc/hosts
 
 Remove text from the top of the file up until it reaches 127.0.0.1 localhost, 
-your file should begin with this line.
+your file should begin with this line. Then try re-running the "cm spark start"
+command again to start your Spark cluster.
