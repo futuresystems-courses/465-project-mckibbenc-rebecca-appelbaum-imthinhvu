@@ -39,6 +39,8 @@ python setup.py install
 
 ```
 sudo sh ansible/install-ansible.sh
+
+If you are running in a virtualenv, please install Ansible via: pip install ansible
 ```
 
 6. Export the CM_SPARK_DIR environment variable to work with the cloudmesh cm spark command:
