@@ -65,7 +65,12 @@ cm deploy spark example
 cm spark start example_1
 ```
 
-10. To destroy the clusters you can run
+10. To stop a running cluster, use the following command.
+```
+cm spark stop example_1
+```
+
+11. To destroy the clusters you can run
 ```
 cm spark destroy example
 ```
