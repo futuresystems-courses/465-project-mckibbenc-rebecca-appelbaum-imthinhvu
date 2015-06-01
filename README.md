@@ -19,7 +19,10 @@ in the config file:
 ```
 StrictHostKeyChecking=no
 
-This file will disable strict host key checking. The user could chose to apply this to all hosts or you can specify the hosts that you want this to apply to. We chose to incorporate this so that users will not have any manual entry when implementing our cm command.
+This file will disable strict host key checking. The user could chose 
+to apply this to all hosts or you can specify the hosts that you want this 
+to apply to. We chose to incorporate this so that users will not have any 
+manual entry when implementing our cm command.
 ```
 
 3. Change directories into our project folder.
