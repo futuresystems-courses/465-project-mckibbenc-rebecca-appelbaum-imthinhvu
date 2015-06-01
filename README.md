@@ -69,3 +69,12 @@ cm spark start example_1
 ```
 cm spark destroy example
 ```
+
+## 4 Troubleshooting 
+### Nodes not starting after running "cm spark start" - Edit /etc/hosts
+If your nodes are not running, there may be an issue with how the /etc/hosts file was generated on each node. To fix, login to your designated master node, and open up the /etc/hosts file to edit as mentioned below:
+```
+sudo vi /etc/hosts
+
+Remove text from the top of the file up until it reaches 127.0.0.1 localhost, 
+your file should begin with this line.
